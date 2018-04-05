@@ -1,26 +1,20 @@
 {
-  "name": "anypoint-behaviors",
-  "version": "1.0.0",
-  "license": "All rights reserved to Mulesoft Inc.",
+  "name": "@anypoint-components/anypoint-behaviors",
   "description": "Implements an element validated with Anypoint.AnypointValidatorBehavior for the Anypoint components",
+  "version": "2.0.0-preview",
+  "license": "(C) MuleSoft. All rights reserved.",
   "devDependencies": {
-    "polymer-cli": "^0.16.0"
+    "@polymer/gen-typescript-declarations": "^1.1.1",
+    "bower": "^1.8.0"
   },
-  "engines": {
-    "node": ">=0.10.0"
-  },
-  "private": false,
-  "main": [
-    "anypoint-hoverable-behavior.html"
-  ],
-  "author": "The Advanced REST client authors <arc@mulesoft.com>",
+  "private": true,
+  "main": "anypoint-hoverable-behavior.html",
+  "author": "Pawel Psztyc",
   "scripts": {
-    "serve": "node_modules/.bin/polymer serve",
-    "lint": "node_modules/.bin/polymer lint anypoint-behaviors.html",
-    "test-sauce": "node_modules/.bin/polymer test --plugin sauce --job-name \"anypoint-behaviors:local-test\"",
-    "test": "node_modules/.bin/polymer test",
-    "deps": "npm install --quiet && bower install --quiet",
-    "update-deps": "npm update --quiet && bower update --quiet"
+    "lint": "polymer lint anypoint-hoverable-behavior.html",
+    "test-sauce": "polymer test --plugin sauce --job-name \"anypoint-behaviors:local-test\"",
+    "test": "polymer test --plugin local",
+    "update-types": "gen-typescript-declarations --deleteExisting --outDir ."
   },
   "repository": {
     "type": "git",

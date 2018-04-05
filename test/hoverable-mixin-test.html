@@ -1,0 +1,52 @@
+<!doctype html>
+<!--
+@license
+Copyright 2016 Mulesoft.
+
+All rights reserved.
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+    <!-- <script src="../../iron-test-helpers/mock-interactions.js"></script> -->
+    <link rel="import" href="hoverable-test-element.html">
+  </head>
+  <body>
+
+    <test-fixture id="Basic">
+      <template>
+        <div style="padding: 20px;">
+          <test-element></test-element>
+        </div>
+      </template>
+    </test-fixture>
+
+    <script>
+    suite('Hover', () => {
+      let element;
+      setup(() => {
+        element = fixture('Basic').querySelector('test-element');
+      });
+
+      test('Hover is undefined by default', () => {
+        assert.isUndefined(element.hovered);
+      });
+
+      // test('Enters hover state', () => {
+      //   MockInteractions.move(element, {
+      //     x: 10,
+      //     y: 10
+      //   }, {
+      //     x: 30,
+      //     y: 30
+      //   });
+      //   assert.isTrue(element.hovered);
+      // });
+    });
+    </script>
+
+  </body>
+</html>
