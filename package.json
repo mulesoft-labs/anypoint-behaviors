@@ -1,6 +1,6 @@
 {
   "name": "anypoint-behaviors",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "license": "All rights reserved to Mulesoft Inc.",
   "description": "Implements an element validated with Anypoint.AnypointValidatorBehavior for the Anypoint components",
   "devDependencies": {
