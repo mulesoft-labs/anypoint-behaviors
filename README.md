@@ -2,8 +2,8 @@
 
 # Anypoint mixins for Polymer 2.0
 
-This is copyrighted library.
+A set of behaviors / mixins for API console.
 
 (c) MuleSoft. All rights reserved.
 
-This repo is to be moved to private repos.
+Author: Pawel Psztyc
