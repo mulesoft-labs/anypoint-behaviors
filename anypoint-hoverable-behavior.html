@@ -4,14 +4,22 @@ Copyright 2017 Mulesoft.
 
 All rights reserved.
 -->
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/lib/utils/mixin.html">
+<link rel="import" href="../polymer/lib/utils/render-status.html">
 <!--
 @group Anypoint Elements
 @element anypoint-hoverable-behavior
 @demo demo/index.html
 -->
 <script>
-window.Anypoint = window.Anypoint || {};
+(function(global) {
+'use strict';
+if (!global.Anypoint) {
+  /**
+   * @namespace Anypoint
+   */
+  global.Anypoint = {};
+}
 /**
  * **Note:** This is closed software and you can't use it in your projects unless
  * you are a Mulesoft employee working on internall project.
@@ -22,33 +30,68 @@ window.Anypoint = window.Anypoint || {};
  * Be aware that mobile devices will not support hovering as desktop devices and behavior
  * may vary depending on platform. You should use this as little as possible.
  *
- * @polymerBehavior Anypoint.AnypointHoverableBehavior
+ * @polymer
+ * @mixinFunction
+ * @memberof Anypoint
  */
-Anypoint.AnypointHoverableBehavior = {
-  properties: {
-    /**
-     * Set to tru when the controll is currently being hovered.
-     */
-    hovered: {
-      type: Boolean,
-      notify: true,
-      reflectToAttribute: true
+Anypoint.HoverableBehavior = Polymer.dedupingMixin((base) => {
+  /**
+   * @polymer
+   * @mixinClass
+   */
+  class Hmixin extends base {
+    static get properties() {
+      return {
+        /**
+         * Set to `true` when the control is currently being hovered.
+         */
+        hovered: {
+          type: Boolean,
+          notify: true,
+          reflectToAttribute: true
+        }
+      };
     }
-  },
-
-  listeners: {
-    'mouseover': '_onHover',
-    'mouseleave': '_onLeave'
-  },
-  // Set's the `hovered` attribute to true when handled.
-  _onHover: function() {
-    // wherever child element send this event it will be always somewhere inside this.
-    this.hovered = true;
-  },
-  // Updates `hovered` if the control is not hovered anymore.
-  _onLeave: function() {
-    // mouseleave is fired when the pointer has exited the element and all of its descendants
-    this.hovered = false;
+    /**
+     * @constructor
+     */
+    constructor() {
+      super();
+      this._hoverCallback = this._hoverCallback.bind(this);
+      this._leaveCallback = this._leaveCallback.bind(this);
+    }
+    /**
+     * Registers hover listeners
+     */
+    connectedCallback() {
+      super.connectedCallback();
+      Polymer.RenderStatus.afterNextRender(this, () => {
+        this.addEventListener('mouseover', this._hoverCallback);
+        this.addEventListener('mouseleave', this._leaveCallback);
+      });
+    }
+    /**
+     * Removes hover listeners
+     */
+    disconnectedCallback() {
+      super.disconnectedCallback();
+      this.removeEventListener('mouseover', this._hoverCallback);
+      this.removeEventListener('mouseleave', this._leaveCallback);
+    }
+    /**
+     * Set's the `hovered` attribute to true when handled.
+     */
+    _hoverCallback() {
+      this.hovered = true;
+    }
+    /**
+     * Updates `hovered` if the control is not hovered anymore.
+     */
+    _leaveCallback() {
+      this.hovered = false;
+    }
   }
-};
+return Hmixin;
+});
+})(window);
 </script>

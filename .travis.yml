@@ -1,26 +1,24 @@
 language: node_js
+node_js: 8
 sudo: required
-dist: trusty
-node_js: stable
 before_script:
-- npm install --silent bower polymer-cli
-- "./node_modules/.bin/bower install --silent"
+- npm install -g polymer-cli
+- polymer install --variants
 addons:
+  firefox: latest
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
   sauce_connect: true
 script:
-- npm run lint
-- ./node_modules/.bin/polymer test --plugin sauce --job-name "anypoint-validatable-behavior:${TRAVIS_BRANCH}"
-  --build-number=${TRAVIS_BUILD_NUMBER}
+- xvfb-run polymer test polymer test --plugin local
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then polymer test --plugin sauce --job-name
+  "anypoint-behaviors:${TRAVIS_BRANCH}" --build-number=${TRAVIS_BUILD_NUMBER}; fi
 cache:
   directories:
-  - bower_components
   - node_modules
-branches:
-  only:
-  - stage
-  - develop
-after_success:
-- node tasks/ci.js
 env:
   global:
   - secure: RvAeR5br70qXm0MCU1SV/ZLfILx631WvS+D55gr+2l7IJtjfXnO9r9GtQO8Us2N5lDOhb9aYyhrZJHm2CXVsUJrOteP5RcCDlaHOft6RojXVIQP0l0CaE96DITP9i/YX5Wjz4JOoYLjQgkVzTwGiCFtMUrcdKb/oT7vUKYMk0J+amHsw+BTtuoX5vp4GLWYIx81unsIZBRWJi13TiIGVd+hUXMUDW2WDR9TMpN1WvmC4I4yRB2871Nij8r5WhhWO7PXXjQ5pQ8Kjpo3KqN+WXaW1STqQUiI+qXXnv8eYsa7g6kfblw9toLLlW4CLziWJsneazN6LKKkhPxtvCvplqn5TwbvUFRM5fud4Hk4a022bZSYHMik9RGYqBxYMLRyKNZHrrzpWCx6amPm3CueyZ73qJezXJIapi4GAp6FqZcaXPY41nH0rrTYWkLx3r7tQqzr/TDli0pNP9pBwTdOrOb8rQ7WEW/Fvjji9AmK0NG7nQxa12o2CBPE7aGmhWe/IV7eYnx8vWZgs02ug6ngRJ91RhcXNNFyLf/Xsh4UFEE/9u6thSCFhsQdnBgaqIDiZrNc1IJHDYz+X1sZNJzHUNUaffYNch8CbpnmtQ/DBTTcdrwq2rAoRa6Qt3LqQT/nUsfrcnac3v4Pk6Kq4+5Yj/RWnq+aPYzpGZty9Lg1jba4=
